@@ -29,7 +29,20 @@ const Layout = () => {
   const [data] = useStore()
   const search = useSearch()
 
-  const talks = () => (search.active() ? search.results().map((x) => x.item) : data.lectures)
+  const isOxfordOrCambridge = (lecture: Lecture) => {
+    const hostName = lecture.host.name.toLowerCase()
+    return hostName.includes('oxford') || hostName.includes('cambridge')
+  }
+
+  const filteredLectures = () => {
+    const baseLectures = search.active() ? search.results().map((x) => x.item) : data.lectures
+    if (data.includeOxfordCambridge) {
+      return baseLectures
+    }
+    return baseLectures.filter(lecture => !isOxfordOrCambridge(lecture))
+  }
+
+  const talks = () => filteredLectures()
 
   return (
     <div

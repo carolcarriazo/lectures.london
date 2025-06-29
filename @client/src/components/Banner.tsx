@@ -1,7 +1,10 @@
 import { BlueskyIcon, CalenderIcon, GithubIcon, TwitterIcon } from './Icons'
 import { ButtonLink } from './Button'
+import { useStore } from '../data'
 
 export const Banner = () => {
+  const [data, { toggleOxfordCambridge }] = useStore()
+
   return (
     <div class="sm:px-2 pt-6 space-y-6">
       <div class="space-y-2 sm:columns-1">
@@ -23,6 +26,17 @@ export const Banner = () => {
             href="https://bsky.app/profile/lectureslondon.bsky.social"
             target="_blank"
           ></ButtonLink>
+        </div>
+        <div class="pt-2">
+          <label class="flex items-center gap-2 text-sm cursor-pointer">
+            <input
+              type="checkbox"
+              checked={data.includeOxfordCambridge}
+              onChange={toggleOxfordCambridge}
+              class="w-4 h-4 rounded border-gray-300 focus:ring-2 focus:ring-blue-500"
+            />
+            <span>Include Oxford and Cambridge?</span>
+          </label>
         </div>
       </div>
     </div>

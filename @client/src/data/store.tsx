@@ -4,6 +4,7 @@ import { createStore } from 'solid-js/store'
 const initial = {
   lectures: [] as Lecture[],
   loading: true,
+  includeOxfordCambridge: false,
 }
 
 export const StoreContext = createContext<ReturnType<typeof getStore>>([{} as any, {} as any])
@@ -25,5 +26,9 @@ export const getStore = (props: Partial<typeof initial>) => {
       })
   })
 
-  return [state, { set }] as const
+  const toggleOxfordCambridge = () => {
+    set('includeOxfordCambridge', !state.includeOxfordCambridge)
+  }
+
+  return [state, { set, toggleOxfordCambridge }] as const
 }
