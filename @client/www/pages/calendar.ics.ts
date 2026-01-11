@@ -1,20 +1,11 @@
 import type { APIRoute } from 'astro'
 import ical from 'ical-generator'
 import dayjs from 'dayjs'
+import lectures from '../../lectures.json'
+import { config } from '../config'
 
-import { slugit } from '../../../../src/util'
-
-export const getStaticPaths = async () => {
-  const lectures = await import('../../../../lectures.json').then((x) => x.default)
-  return lectures.map((x) => ({
-    params: { lecture: slugit(x.title), host: slugit(x.host.name) },
-    props: x,
-  }))
-}
-
-export const GET: APIRoute<Lecture> = async (props) => {
-  const lecture = props.props
-  return new Response(createCallender(`${props.url.href}`, [lecture]), {
+export const GET: APIRoute = async (props) => {
+  return new Response(createCalendar(`${props.url.href}`, lectures), {
     status: 200,
     headers: {
       'Content-disposition': 'attachment; filename=events.ics',
@@ -24,20 +15,25 @@ export const GET: APIRoute<Lecture> = async (props) => {
   })
 }
 
-const createCallender = (url: string, lectures: Lecture[]) => {
-  const cal = ical({ url, name: 'Lectures London', timezone: 'Europe/London' })
-
-  lectures.forEach((lecture) => {
-    cal.createEvent({
+const createCalendar = (url: string, lectures: Lecture[]) => {
+  const cal = ical({
+    url,
+    name: 'Lectures London',
+    timezone: 'Europe/London',
+    ttl: 12 * 60 * 60,
+    source: url,
+    description: config.description,
+    events: lectures.map((lecture) => ({
       summary: lecture.title,
       start: dayjs(lecture.time_start).toISOString(),
       end: lecture.time_end
         ? dayjs(lecture.time_end).toISOString()
         : dayjs(lecture.time_start).add(1, 'hour').toISOString(),
+      created: dayjs().toISOString(),
       description: lecture.summary,
       location: `${lecture.host.name}: ${lecture.location}`,
       url: lecture.link,
-    })
+    })),
   })
 
   return cal.toString()

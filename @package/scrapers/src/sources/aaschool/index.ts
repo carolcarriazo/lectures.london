@@ -3,6 +3,7 @@ import { crawler } from '../../context'
 
 const info = {
   name: 'Architectural Association School of Architecture',
+  city: 'London',
   website: 'https://www.aaschool.ac.uk/',
   twitter: '@AASchool',
 }

@@ -4,6 +4,7 @@ import { crawler } from '../../context'
 
 const info: Omit<Host, 'lectures'> = {
   name: 'The Royal Society',
+  city: 'London',
   website: 'https://royalsociety.org',
   icon: 'https://royalsociety.org/assets/icons/favicon-16x16.png',
   description: `The Royal Society is a Fellowship of many of the world's most eminent scientists and is the oldest scientific academy in continuous existence.`,

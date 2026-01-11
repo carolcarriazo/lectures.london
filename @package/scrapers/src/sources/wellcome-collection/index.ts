@@ -4,6 +4,7 @@ import { crawler } from '../../context'
 
 const info: Omit<Host, 'lectures'> = {
   name: 'Wellcome Collection',
+  city: 'London',
   website: 'https://wellcomecollection.org',
 }
 
@@ -24,7 +25,7 @@ export const run = crawler(async () => {
 
     const eventResults = data.props.pageProps.events.results.filter((event: any) => {
       const isRelevantFormat = event.format?.label &&
-        ['Discussion', 'Session', 'Performance'].includes(event.format.label)
+        ['Discussion', 'Session', 'Performance', 'Workshop', 'Festival', 'Lecture'].includes(event.format.label)
 
       const hasEducationalSeries = event.series && event.series.length > 0
 

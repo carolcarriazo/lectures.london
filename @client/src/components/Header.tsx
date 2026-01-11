@@ -1,12 +1,37 @@
 import { cn } from 'mcn'
+import { For } from 'solid-js'
 
 import { ArrowLeftIcon } from './Icons'
 import { router } from '../router'
+import { useStore } from '../data'
 
 export const Header = () => {
   const [value, update] = router.query('query')
+  const [city, setCity] = router.query('city')
+  const [host, setHost] = router.query('host')
   const m = router.match('/:host/:lecture')
   const [state, api] = router.use()
+  const [data] = useStore()
+
+  const locations = () => {
+    const all = data.lectures.reduce(
+      (acc, l) => {
+        const c = (l.host as any).city || 'London'
+        if (!acc[c]) acc[c] = new Set()
+        acc[c].add(l.host.name)
+        return acc
+      },
+      {} as Record<string, Set<string>>,
+    )
+    return Object.entries(all)
+      .map(([c, h]) => ({ city: c, hosts: [...h].sort() }))
+      .sort((a, b) => {
+        if (a.city === 'London') return -1
+        if (b.city === 'London') return 1
+        return a.city.localeCompare(b.city)
+      })
+  }
+
   const shouldGoBack = () =>
     /http:\/\/localhost|lectures\.london/.test(state.previous?.url || '') && state.previous?.pathname === '/'
 
@@ -44,6 +69,40 @@ export const Header = () => {
           onInput={(e: any) => update(e.target.value || '')}
           value={value() || ''}
         />
+        <select
+          class={cn('bg-transparent border-none outline-none text-base relative top-1 max-w-[150px] cursor-pointer', [
+            !!m(),
+            'hidden md:block',
+          ])}
+          value={host() ? `host:${host()}` : city() ? `city:${city()}` : ''}
+          onChange={(e) => {
+            const val = e.currentTarget.value
+            if (!val) {
+              setCity('')
+              setHost('')
+            } else if (val.startsWith('city:')) {
+              setCity(val.replace('city:', ''))
+              setHost('')
+            } else if (val.startsWith('host:')) {
+              const h = val.replace('host:', '')
+              const l = data.lectures.find((x) => x.host.name === h)
+              if (l) setCity((l.host as any).city || 'London')
+              setHost(h)
+            }
+          }}
+        >
+          <option value="">All Locations</option>
+          <For each={locations()}>
+            {(g) => (
+              <>
+                {g.hosts.length > 1 && <option value={`city:${g.city}`}>{g.city} (all)</option>}
+                <optgroup label={g.city}>
+                  <For each={g.hosts}>{(h) => <option value={`host:${h}`}>{h}</option>}</For>
+                </optgroup>
+              </>
+            )}
+          </For>
+        </select>
       </div>
     </div>
   )

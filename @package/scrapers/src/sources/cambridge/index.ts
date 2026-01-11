@@ -6,6 +6,7 @@ import { crawler } from '../../context'
 
 const info = {
   name: 'Cambridge University',
+  city: 'Cambridge',
   website: 'https://www.cam.ac.uk/',
   twitter: '@Cambridge_Uni',
 }
@@ -16,11 +17,11 @@ const getHost = () =>
     .then((x) => ({ ...info, description: x.description || '' }))
 
 export const run = crawler(async () => {
-  const webcalender = await fetch(
+  const webcalendar = await fetch(
     `https://webservices.admin.cam.ac.uk/events/api/programmes/11/calendar/categories/12/events.ics?resultSetSize=20000`,
   ).then((x) => x.text())
 
-  const lectures = ICAL.parse(webcalender)[2]
+  const lectures = ICAL.parse(webcalendar)[2]
     .map((y: any) => Object.fromEntries(y[1].map((z: any) => [z[0], z[3]])))
     .map((y: any) => {
       return {

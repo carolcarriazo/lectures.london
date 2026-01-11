@@ -59,6 +59,7 @@ export const run = crawler(async () => {
 
   return {
     name: 'Imperial College',
+    city: 'London',
     website: 'https://www.imperial.ac.uk',
     twitter: '@imperialcollege',
     description,

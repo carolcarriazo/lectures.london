@@ -3,6 +3,7 @@ import { Host } from '../../entities'
 
 const info: Omit<Host, 'lectures'> = {
   name: 'The British Academy',
+  city: 'London',
   website: 'https://www.thebritishacademy.ac.uk',
   icon: 'https://www.thebritishacademy.ac.uk/static/favicon/safari-pinned-tab.d0302baaab29.svg',
 }

@@ -1,7 +1,7 @@
 import { createEffect } from 'solid-js'
 import dayjs from 'dayjs'
 
-import { CalenderIcon, LinkIcon } from './Icons'
+import { CalendarIcon, LinkIcon } from './Icons'
 import { applyParams, slugit } from '../util'
 import { ButtonLink } from './Button'
 import { Summary } from './Summary'
@@ -21,21 +21,29 @@ export const LectureCard = (p: { lecture: Lecture }) => {
       <div class="px-4 md:pl-0 md:pr-5 pt-5">
         <h2 onClick={() => document.getElementById(`${p.lecture.id}`)?.scrollIntoView()}>{p.lecture.title}</h2>
 
-        <p class="py-2">{p.lecture.host.name}</p>
-        <div class="grid grid-cols-2 gap-3 pt-6">
-          <div class="font-medium">
-            <p>{p.lecture.time_start && dayjs(p.lecture.time_start).format('MMMM D')}</p>
-            <p>
-              <time dateTime={p.lecture.time_start}>
-                {p.lecture.time_start && dayjs(p.lecture.time_start).format('LT').toLowerCase()}
-              </time>
-              <time dateTime={p.lecture.time_end}>
-                {p.lecture.time_end && dayjs(p.lecture.time_end).format(' - LT').toLowerCase()}
-              </time>
-            </p>
+        <div>
+          <p class="text-xs uppercase font-bold opacity-50">Host</p>
+          <p class="py-1">{p.lecture.host.name}</p>
+        </div>
+        <div class="grid grid-cols-2 gap-3 pt-4">
+          <div>
+            <p class="text-xs uppercase font-bold opacity-50">Date and Time</p>
+            <div class="pt-1 font-medium">
+              <p>{p.lecture.time_start && dayjs(p.lecture.time_start).format('MMMM D')}</p>
+              <p>
+                <time dateTime={p.lecture.time_start}>
+                  {p.lecture.time_start && dayjs(p.lecture.time_start).format('LT').toLowerCase()}
+                </time>
+                <time dateTime={p.lecture.time_end}>
+                  {p.lecture.time_end && dayjs(p.lecture.time_end).format(' - LT').toLowerCase()}
+                </time>
+              </p>
+            </div>
           </div>
           <div>
-            <p class="text-sm sm:text-base">{p.lecture.location}</p>
+            <p class="text-xs uppercase font-bold opacity-50">Address</p>
+            <p class="pt-1 text-sm sm:text-base">{p.lecture.location}</p>
+            <p class="text-xs opacity-60">{(p.lecture.host as any).city || 'London'}</p>
           </div>
         </div>
 
@@ -45,14 +53,14 @@ export const LectureCard = (p: { lecture: Lecture }) => {
           </ButtonLink>
 
           <ButtonLink
-            icon={<CalenderIcon class="w-5 h-5" />}
+            icon={<CalendarIcon class="w-5 h-5" />}
             tabIndex={0}
-            href={applyParams('/:host/:lecture/calender.ics', {
+            href={applyParams('/:host/:lecture/calendar.ics', {
               host: slugit(p.lecture.host.name),
               lecture: slugit(p.lecture.title),
             })}
           >
-            calender
+            calendar
           </ButtonLink>
         </div>
         <div class="overflow-auto pb-24">

@@ -4,6 +4,7 @@ import { crawler } from '../../context'
 
 const info: Omit<Host, 'lectures'> = {
   name: 'The Royal Academy of Arts',
+  city: 'London',
   website: 'https://www.royalacademy.org.uk',
   description: `The Royal Academy of Arts, located in the heart of London, is a place where art is made, exhibited and debated.`,
   twitter: '@royalacademy',

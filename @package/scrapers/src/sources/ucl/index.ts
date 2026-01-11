@@ -40,6 +40,7 @@ export const run = crawler(async () => {
   const lectures = await fetch_lectures()
   return {
     name: 'University College London',
+    city: 'London',
     website: 'https://www.ucl.ac.uk/',
     twitter: '@ucl',
     threads: '@ucl',

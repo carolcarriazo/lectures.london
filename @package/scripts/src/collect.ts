@@ -47,11 +47,13 @@ const app = command({
     ).run()
 
     const lectures = results
-      .map((y) => y.lectures.map((z) => ({ ...z, host: { id: hash(y.website), name: y.name, twitter: y.twitter } })))
+      .map((y) =>
+        y.lectures.map((z) => ({ ...z, host: { id: hash(y.website), name: y.name, twitter: y.twitter, city: y.city } })),
+      )
       .flat()
       .reduce(
         (a, b) => (a.some((y) => y.link === b.link) ? a : [...a, b]),
-        [] as (Entity.Lecture & { host: { id: string; name: string } })[],
+        [] as (Entity.Lecture & { host: { id: string; name: string; city: string } })[],
       )
       .filter((x) => x.free)
       .filter((x) => dayjs(x.time_start).isAfter(dayjs()))
@@ -60,7 +62,7 @@ const app = command({
         id: hash(x.link),
         link: x.link,
         title: x.title,
-        location: x.location,
+        location: x.location || 'See event link for location details',
         host: x.host,
         time_start: x.time_start,
         time_end: x.time_end,
@@ -68,7 +70,13 @@ const app = command({
         ...(x.summary_html ? { summary_html: x.summary_html } : { summary: x.summary }),
       }))
 
-    const hosts = results.map((y) => ({ id: hash(y.website), website: y.website, name: y.name, twitter: y.twitter }))
+    const hosts = results.map((y) => ({
+      id: hash(y.website),
+      website: y.website,
+      name: y.name,
+      twitter: y.twitter,
+      city: y.city,
+    }))
 
     await fs.writeFile(args.lectures, JSON.stringify(lectures, null, 2))
     await fs.writeFile(args.hosts, JSON.stringify(hosts, null, 2))
