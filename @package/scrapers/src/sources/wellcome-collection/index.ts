@@ -4,6 +4,7 @@ import { crawler } from '../../context'
 
 const info: Omit<Host, 'lectures'> = {
   name: 'Wellcome Collection',
+  city: 'London',
   website: 'https://wellcomecollection.org',
 }
 

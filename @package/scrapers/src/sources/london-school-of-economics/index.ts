@@ -55,6 +55,7 @@ export const run = crawler(async () => {
 
   return {
     name: 'London School of Economics',
+    city: 'London',
     website: 'http://www.lse.ac.uk/',
     twitter: '@LSEnews',
     lectures,

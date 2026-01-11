@@ -4,7 +4,7 @@ import { parseStartEnd, sanitizeHtml, sanitizeText } from '../../utility'
 import { crawler } from '../../context'
 import { Lecture } from '../../entities'
 
-const info = { name: 'School of Advanced Study', website: 'https://www.sas.ac.uk', twitter: '@SASNews' }
+const info = { name: 'School of Advanced Study', city: 'London', website: 'https://www.sas.ac.uk', twitter: '@SASNews' }
 
 const lecture = s.query({
   link: s.map(s.query('a@href'), (x) => (x ? `https://www.sas.ac.uk${x}` : undefined)),

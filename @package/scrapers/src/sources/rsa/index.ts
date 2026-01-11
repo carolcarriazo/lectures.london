@@ -28,6 +28,7 @@ export const run = crawler(async () => {
 
   return {
     name: 'RSA',
+    city: 'London',
     website: 'https://www.thersa.org',
     twitter: '@thersaorg',
     lectures: lectures.filter(Boolean),

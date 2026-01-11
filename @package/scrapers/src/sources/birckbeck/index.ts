@@ -6,6 +6,7 @@ import { Lecture } from '../../entities'
 
 const info = {
   name: 'Birkbeck, University of London',
+  city: 'London',
   website: 'https://www.bbk.ac.uk',
   twitter: '@BirkbeckUoL',
 }

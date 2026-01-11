@@ -4,6 +4,7 @@ import { crawler } from '../../context'
 
 const info = {
   name: 'The Francis Crick Institute',
+  city: 'London',
   website: 'https://www.crick.ac.uk',
   threads: '@thefranciscrickinstitute',
   description:

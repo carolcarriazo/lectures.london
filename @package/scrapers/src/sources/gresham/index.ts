@@ -5,6 +5,7 @@ import { crawler } from '../../context'
 
 const info = {
   name: 'Gresham College',
+  city: 'London',
   website: 'https://www.gresham.ac.uk/',
   twitter: '@GreshamCollege',
 }
