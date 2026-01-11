@@ -16,7 +16,7 @@ export const Header = () => {
   const locations = () => {
     const all = data.lectures.reduce(
       (acc, l) => {
-        const c = (l.host as any).city || 'London'
+        const c = l.host.city || 'London'
         if (!acc[c]) acc[c] = new Set()
         acc[c].add(l.host.name)
         return acc
@@ -86,7 +86,7 @@ export const Header = () => {
             } else if (val.startsWith('host:')) {
               const h = val.replace('host:', '')
               const l = data.lectures.find((x) => x.host.name === h)
-              if (l) setCity((l.host as any).city || 'London')
+              if (l) setCity(l.host.city || 'London')
               setHost(h)
             }
           }}

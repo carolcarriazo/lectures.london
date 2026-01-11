@@ -43,7 +43,7 @@ export const LectureCard = (p: { lecture: Lecture }) => {
           <div>
             <p class="text-xs uppercase font-bold opacity-50">Address</p>
             <p class="pt-1 text-sm sm:text-base">{p.lecture.location}</p>
-            <p class="text-xs opacity-60">{(p.lecture.host as any).city || 'London'}</p>
+            <p class="text-xs opacity-60">{p.lecture.host.city || 'London'}</p>
           </div>
         </div>
 
