@@ -6,8 +6,25 @@ import type lecture from '../lectures.json'
 import type host from '../host.json'
 
 declare global {
-  type Host = (typeof host)[number]
-  type Lecture = (typeof lecture)[number]
+  type Host = {
+    id: string
+    name: string
+    city: string
+    website: string
+    twitter?: string
+  }
+  type Lecture = {
+    id: string
+    title: string
+    link: string
+    time_start: string
+    time_end?: string
+    location?: string
+    host: Host
+    summary?: string
+    summary_html?: string
+    image?: { src: string }
+  }
   interface Window {
     dataLayer: any[]
     gtag: (...args: any[]) => void

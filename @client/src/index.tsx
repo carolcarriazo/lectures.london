@@ -35,7 +35,7 @@ const Layout = () => {
     let list = search.active() ? search.results().map((x) => x.item) : data.lectures
     const c = city()
     const h = host()
-    if (c) list = list.filter((x) => ((x.host as any).city || 'London') === c)
+    if (c) list = list.filter((x) => (x.host.city || 'London') === c)
     if (h) list = list.filter((x) => x.host.name === h)
     return list
   }
