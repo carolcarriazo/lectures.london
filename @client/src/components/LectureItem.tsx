@@ -41,8 +41,11 @@ export const LectureListItem = (p: { lecture: Lecture; disableTime?: boolean }) 
           'sm:pb-2',
         ])}
       >
-        <p class="text-sm truncate opacity-60" title={p.lecture.location}>
-          {p.lecture.location}
+        <p
+          class="text-sm opacity-60"
+          title={`${p.lecture.host.name}, ${(p.lecture.host as any).city || 'London'}`}
+        >
+          {p.lecture.host.name}, {(p.lecture.host as any).city || 'London'}
         </p>
       </div>
     </article>

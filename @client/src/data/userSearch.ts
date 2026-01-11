@@ -47,5 +47,9 @@ const options = {
       name: 'host.name',
       weight: 0.8,
     },
+    {
+      name: 'host.city',
+      weight: 0.8,
+    },
   ],
 }
