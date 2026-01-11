@@ -33,9 +33,8 @@ export const LectureList = (props: { lectures: Lecture[]; loading?: boolean }) =
             return (
               <>
                 {next_day && (
-                  <div class="bg-bg sticky top-[var(--header-height)] pt-0 z-20 mt-6 border-b flex justify-between">
-                    <p class="py-2 sm:px-2">{dayjs(current_day).format(`dddd`)}</p>
-                    <p class="py-2 sm:px-2">{dayjs(current_day).format(`MMM D`)}</p>
+                  <div class="bg-bg sticky top-[var(--header-height)] pt-0 z-20 mt-6 border-b flex justify-start gap-2">
+                    <p class="py-2 sm:px-2 font-medium">{dayjs(current_day).format(`dddd, MMM D`)}</p>
                   </div>
                 )}
                 <LectureListItem lecture={lecture} disableTime={disableTime} />

@@ -1,12 +1,18 @@
 import { cn } from 'mcn'
+import { For } from 'solid-js'
 
 import { ArrowLeftIcon } from './Icons'
 import { router } from '../router'
+import { useStore } from '../data'
 
 export const Header = () => {
   const [value, update] = router.query('query')
+  const [location, setLocation] = router.query('location')
   const m = router.match('/:host/:lecture')
   const [state, api] = router.use()
+  const [data] = useStore()
+
+  const locations = () => [...new Set(data.lectures.map((l) => l.location).filter(Boolean))].sort()
   const shouldGoBack = () =>
     /http:\/\/localhost|lectures\.london/.test(state.previous?.url || '') && state.previous?.pathname === '/'
 
@@ -44,6 +50,17 @@ export const Header = () => {
           onInput={(e: any) => update(e.target.value || '')}
           value={value() || ''}
         />
+        <select
+          class={cn('bg-transparent border-none outline-none text-base relative top-1 max-w-[150px] cursor-pointer', [
+            !!m(),
+            'hidden md:block',
+          ])}
+          value={location() || ''}
+          onChange={(e) => setLocation(e.currentTarget.value || '')}
+        >
+          <option value="">All Locations</option>
+          <For each={locations()}>{(loc) => <option value={loc}>{loc}</option>}</For>
+        </select>
       </div>
     </div>
   )

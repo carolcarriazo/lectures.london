@@ -12,7 +12,7 @@ export const LectureListItem = (p: { lecture: Lecture; disableTime?: boolean }) 
     <article
       id={p.lecture.id}
       class={cn(
-        'group grid [grid-template-columns:3.2rem_1fr] sm:[grid-template-columns:3.9rem_1fr] z-0 scroll-mt-36 transition-all',
+        'group grid [grid-template-columns:3.2rem_1fr] sm:[grid-template-columns:3.9rem_1fr_12rem] z-0 scroll-mt-36 transition-all',
         [!!m(), ''],
       )}
     >
@@ -33,6 +33,17 @@ export const LectureListItem = (p: { lecture: Lecture; disableTime?: boolean }) 
             {p.lecture.title}
           </p>
         </a>
+      </div>
+      <div
+        class={cn('hidden sm:block border-b transition-all pb-3 sm:pt-1 pl-2', [
+          !!m(),
+          'sm:pb-8 border-b-2',
+          'sm:pb-2',
+        ])}
+      >
+        <p class="text-sm truncate opacity-60" title={p.lecture.location}>
+          {p.lecture.location}
+        </p>
       </div>
     </article>
   )

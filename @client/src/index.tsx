@@ -28,8 +28,14 @@ const Layout = () => {
   const match = router.match('/:host/:lecture')
   const [data] = useStore()
   const search = useSearch()
+  const [location] = router.query('location')
 
-  const talks = () => (search.active() ? search.results().map((x) => x.item) : data.lectures)
+  const talks = () => {
+    const list = search.active() ? search.results().map((x) => x.item) : data.lectures
+    const loc = location()
+    if (loc) return list.filter((x) => x.location === loc)
+    return list
+  }
 
   return (
     <div
